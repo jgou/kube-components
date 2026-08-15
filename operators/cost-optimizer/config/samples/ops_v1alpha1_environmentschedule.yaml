@@ -6,4 +6,6 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
   name: environmentschedule-sample
 spec:
-  # TODO(user): Add fields here
+  shutdownHour: 20
+  startupHour: 7
+  timeZone: "Europe/Madrid"

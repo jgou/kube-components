@@ -28,18 +28,35 @@ type EnvironmentScheduleSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of EnvironmentSchedule. Edit environmentschedule_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// StartupHour is the hour of the day when the environment should start up (0-23).
+	// +kubebuilder:validation:Minimum=0
+	// +kubebuilder:validation:Maximum=23
+	StartupHour int `json:"startupHour"`
+	// ShutdownHour is the hour of the day when the environment should shut down (0-23).
+	// +kubebuilder:validation:Minimum=0
+	// +kubebuilder:validation:Maximum=23
+	ShutdownHour int `json:"shutdownHour"`
+	// TimeZone is the time zone of the environment (e.g., "Europe/Madrid").
+	// +kubebuilder:default="UTC"
+	TimeZone string `json:"timeZone,omitempty"`
 }
 
 // EnvironmentScheduleStatus defines the observed state of EnvironmentSchedule.
 type EnvironmentScheduleStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// CurrentStatus indicates the current status of the environment (e.g., "Running", "Stopped").
+	CurrentStatus string `json:"currentStatus,omitempty"`
+	// LastScheduleTime is the last time the environment was scheduled to start or stop.
+	LastScheduleTime string `json:"lastScheduleTime,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
+// +kubebuilder:printColumn:name="Status",type="string",JSONPath=".status.currentStatus",description="Current status of the environment"
+// +kubebuilder:printColumn:name="Shutdown",type="integer",JSONPath=".spec.shutdownHour",description="Hour of the day when the environment should shut down"
+// +kubebuilder:printColumn:name="Startup",type="integer",JSONPath=".spec.startupHour",description="Hour of the day when the environment should start up"
 
 // EnvironmentSchedule is the Schema for the environmentschedules API.
 type EnvironmentSchedule struct {
