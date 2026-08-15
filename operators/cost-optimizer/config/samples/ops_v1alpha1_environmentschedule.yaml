@@ -1,0 +1,9 @@
+apiVersion: ops.gouster.io/v1alpha1
+kind: EnvironmentSchedule
+metadata:
+  labels:
+    app.kubernetes.io/name: cost-optimizer
+    app.kubernetes.io/managed-by: kustomize
+  name: environmentschedule-sample
+spec:
+  # TODO(user): Add fields here
