@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cost-optimizer-operator
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/jgou/kube-components.git'
+    targetRevision: HEAD
+    path: platform/cost-optimizer/manifests
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cost-optimizer-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

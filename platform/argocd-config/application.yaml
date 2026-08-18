@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-configuration
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/jgou/kube-components.git'
+    targetRevision: HEAD
+    path: platform/argocd-config/manifests
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
