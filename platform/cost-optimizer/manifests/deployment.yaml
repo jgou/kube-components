@@ -18,7 +18,7 @@ spec:
       serviceAccountName: cost-optimizer-controller-manager
       containers:
         - name: manager
-          image: gouster/cost-optimizer-operator:v0.1.0
+          image: gouster/cost-optimizer-operator:v0.1.1
           imagePullPolicy: Always
           resources:
             limits:

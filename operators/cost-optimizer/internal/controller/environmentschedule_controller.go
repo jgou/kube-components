@@ -19,6 +19,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -110,7 +111,7 @@ func (r *EnvironmentScheduleReconciler) Reconcile(ctx context.Context, req ctrl.
 				if deployment.Annotations == nil {
 					deployment.Annotations = make(map[string]string)
 				}
-				deployment.Annotations[CostOptimizerPreviousReplicasAnnotation] = string(*deployment.Spec.Replicas)
+				deployment.Annotations[CostOptimizerPreviousReplicasAnnotation] = strconv.Itoa(int(*deployment.Spec.Replicas))
 
 				// Scale down to 0
 				zero := int32(0)

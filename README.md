@@ -86,6 +86,9 @@ make test
 # Regenerate Go deepcopy code and CRD manifests after modifying api/v1alpha1/*_types.go
 make generate
 make manifests
+
+# Push the new tag to the image registry
+make docker-build docker-push IMG=<some-registry>/cost-optimizer:<tag>
 ```
 
 ### Apply CRDs and Run Controller Directly
