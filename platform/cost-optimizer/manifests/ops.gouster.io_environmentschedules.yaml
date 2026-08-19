@@ -1,0 +1,79 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: environmentschedules.ops.gouster.io
+spec:
+  group: ops.gouster.io
+  names:
+    kind: EnvironmentSchedule
+    listKind: EnvironmentScheduleList
+    plural: environmentschedules
+    singular: environmentschedule
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EnvironmentSchedule is the Schema for the environmentschedules
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EnvironmentScheduleSpec defines the desired state of EnvironmentSchedule.
+            properties:
+              shutdownHour:
+                description: ShutdownHour is the hour of the day when the environment
+                  should shut down (0-23).
+                maximum: 23
+                minimum: 0
+                type: integer
+              startupHour:
+                description: StartupHour is the hour of the day when the environment
+                  should start up (0-23).
+                maximum: 23
+                minimum: 0
+                type: integer
+              timeZone:
+                default: UTC
+                description: TimeZone is the time zone of the environment (e.g., "Europe/Madrid").
+                type: string
+            required:
+            - shutdownHour
+            - startupHour
+            type: object
+          status:
+            description: EnvironmentScheduleStatus defines the observed state of EnvironmentSchedule.
+            properties:
+              currentStatus:
+                description: CurrentStatus indicates the current status of the environment
+                  (e.g., "Running", "Stopped").
+                type: string
+              lastScheduleTime:
+                description: LastScheduleTime is the last time the environment was
+                  scheduled to start or stop.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
